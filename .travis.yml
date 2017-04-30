@@ -116,6 +116,25 @@ matrix:
             - libboost-test-dev
       env: COMPILER=clang CC=clang-4.0 CXX=clang++-4.0
 
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          packages:
+            - libeigen3-dev
+            - libboost-test-dev
+
+        coverity_scan:
+          project:
+            name: "severinstrobl/overlap"
+            description: "Build submitted via Travis CI"
+          notification_email:
+            secure: "F4ceywMDhkglJjzSWOM1R49+26SUadnghv0skCgDs6lr88QXrB72Uzv2+BmkqVGY7PjA9XHcw/TldyqAT3r078J7lNzpkZnh2tb/9Nxq+T5fP7s+JgetY3ExL4mv4jaWCK0dqjDm+goR0Qv1b5+ZgPfVx6t6BMvmuAmbapHkB5ucKrvcg1/fPexbTX21SaU+XdVN7rHe9TjcMzldLxm/8Rm2SRbfWn2h+9jNTrXKrUEpRVSpoLJPEiKr1lK3YVCRbQ64JpXhawI5TOklRF7HldFyBNCNJid9p5J04sffmyW6Vq+80FUFk9gHaL25ajF0Krw80sZRALHdoMLSHPEJabB6kQn85MURGzRCPU1SWoHEZ6U8UKOJc834dXXfFhAmEePsqLTnnxhLoVyOTCRql/RLyuaXIW465162Q36YALSDQFOPer6Iaujim7R6LMN8LfmDH+Sg5JM59hCH8aDsuBrzJdj1BtC/ckb/QU9j7nUh8TqudJpPDadFB3son0DmkMYZmGszcmWgMbckdGUsJHm+sX02yEUM3ENtEg2ASEtpkniXZtEWlxVclB88233GZLL0SXw9POQej6O+640j3QI78jLmbSW4SpvsgVmePEK5TPkkEnFDs7vdiuCx9nUltqZPml1pcs/835zv2/AWejfRji0EnFuMpgnmijcWfQc="
+          build_command_prepend: "mkdir cmake; ln -s /usr/share/cmake-2.8/Modules/FindEigen3.cmake cmake/; mkdir build; cd build; cmake ..;"
+          build_command: "cd build; make"
+          branch_pattern: coverity_scan
+      env: COMPILER=gcc CC=gcc CXX=g++
+
 script:
   - mkdir cmake
   - ln -s /usr/share/cmake-2.8/Modules/FindEigen3.cmake cmake/
@@ -124,14 +143,3 @@ script:
   - cmake ..
   - make
   - make test
-
-addons:
-  coverity_scan:
-    project:
-      name: "severinstrobl/overlap"
-      description: "Build submitted via Travis CI"
-    notification_email:
-      secure: "F4ceywMDhkglJjzSWOM1R49+26SUadnghv0skCgDs6lr88QXrB72Uzv2+BmkqVGY7PjA9XHcw/TldyqAT3r078J7lNzpkZnh2tb/9Nxq+T5fP7s+JgetY3ExL4mv4jaWCK0dqjDm+goR0Qv1b5+ZgPfVx6t6BMvmuAmbapHkB5ucKrvcg1/fPexbTX21SaU+XdVN7rHe9TjcMzldLxm/8Rm2SRbfWn2h+9jNTrXKrUEpRVSpoLJPEiKr1lK3YVCRbQ64JpXhawI5TOklRF7HldFyBNCNJid9p5J04sffmyW6Vq+80FUFk9gHaL25ajF0Krw80sZRALHdoMLSHPEJabB6kQn85MURGzRCPU1SWoHEZ6U8UKOJc834dXXfFhAmEePsqLTnnxhLoVyOTCRql/RLyuaXIW465162Q36YALSDQFOPer6Iaujim7R6LMN8LfmDH+Sg5JM59hCH8aDsuBrzJdj1BtC/ckb/QU9j7nUh8TqudJpPDadFB3son0DmkMYZmGszcmWgMbckdGUsJHm+sX02yEUM3ENtEg2ASEtpkniXZtEWlxVclB88233GZLL0SXw9POQej6O+640j3QI78jLmbSW4SpvsgVmePEK5TPkkEnFDs7vdiuCx9nUltqZPml1pcs/835zv2/AWejfRji0EnFuMpgnmijcWfQc="
-    build_command_prepend: "mkdir cmake; ln -s /usr/share/cmake-2.8/Modules/FindEigen3.cmake cmake/; mkdir build; cd build; cmake ..;"
-    build_command: "cd build; make"
-    branch_pattern: coverity_scan
