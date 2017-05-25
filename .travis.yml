@@ -144,4 +144,10 @@ before_script:
   - cmake ..
 
 script:
-  - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then make && make test; fi
+  - if [[ "${COVERITY_SCAN_BRANCH}" == 1 ]];
+      then
+        echo "Skipping building and testing on Coverity Scan run.";
+        exit 0;
+    fi
+  - make
+  - make test
